@@ -1,13 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  firstName: '',
-  lastName: '',
-  address: '',
-  city: '',
-  state: '',
-  zipCode: '',
-  phoneNumber: '',
+  addresses: [],
 };
 
 const addressSlice = createSlice({
@@ -15,15 +9,11 @@ const addressSlice = createSlice({
   initialState,
   reducers: {
     addAddress: (state, action) => {
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.address = action.payload.address;
-      state.city = action.payload.city;
-      state.state = action.payload.state;
-      state.zipCode = action.payload.zipCode;
-      state.phoneNumber = action.payload.phoneNumber;
+      state.addresses.push(action.payload);
     },
-    clearAddress: () => initialState,
+    clearAddress: state => {
+      state.addresses = [];
+    },
   },
 });
 

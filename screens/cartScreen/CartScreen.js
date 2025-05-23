@@ -7,9 +7,11 @@ import CheckoutComp from './components/CheckoutComp';
 const CartScreen = () => {
   const navigation = useNavigation();
   return (
-    <View>
+    <View style={{flex: 1}}>
       <TopBarComp />
-      <CheckoutComp />
+      <View style={{flex: 1}}>
+        <CheckoutComp />
+      </View>
     </View>
   );
 };

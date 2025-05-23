@@ -1,88 +1,78 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AddressDisplayComp from './AddressDisplayComp';
+import {useNavigation} from '@react-navigation/native';
+
+const {height} = Dimensions.get('window');
 
 const CheckoutComp = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>CHECKOUT</Text>
-      <Image
-        source={require('../../../assets/images/designNewArrival.png')}
-        style={{width: 130, height: 15, marginTop: 7, marginBottom: 20}}
-      />
-      <Text style={styles.text}>SHIPPING ADRESS</Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>CHECKOUT</Text>
+        <Image
+          source={require('../../../assets/images/designNewArrival.png')}
+          style={styles.headerImage}
+        />
+        <Text style={styles.text}>SHIPPING ADDRESS</Text>
+        <View>
+          <AddressDisplayComp />
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Address')}>
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonRow}>
+              <Text style={styles.text2}>Add shipping address</Text>
+              <Ionicons name="add" size={30} color="black" />
+            </View>
+          </View>
+        </TouchableOpacity>
 
-      <AddressDisplayComp />
-
-      <TouchableOpacity onPress={() => navigation.navigate('Address')}>
+        <Text style={[styles.text, {marginTop: 40}]}>SHIPPING METHOD</Text>
         <View style={styles.buttonContainer}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginHorizontal: 20,
-            }}>
-            <Text style={styles.text2}>Add shipping adress</Text>
-            <Ionicons name="add" size={30} color="black" />
+          <View style={styles.buttonRow}>
+            <Text style={styles.text2}>Pickup at store</Text>
+            <Text style={styles.freeText}>FREE</Text>
+            <MaterialIcons name="expand-more" size={30} color="black" />
           </View>
         </View>
-      </TouchableOpacity>
 
-      <Text style={[styles.text, {marginTop: 50}]}>SHIPPING METHOD</Text>
-      <View style={styles.buttonContainer}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-          }}>
-          <Text style={styles.text2}>Pickup at store</Text>
-          <Text
-            style={{
-              fontFamily: 'TenorSans-Regular',
-              opacity: 0.6,
-              marginLeft: 80,
-            }}>
-            FREE
-          </Text>
-          <MaterialIcons name="expand-more" size={30} color="black" />
+        <Text style={[styles.text, {marginTop: 40}]}>PAYMENT METHOD</Text>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonRow}>
+            <Text style={styles.text2}>Select payment method</Text>
+            <MaterialIcons name="expand-more" size={30} color="black" />
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
-      <Text style={[styles.text, {marginTop: 50}]}>PAYMENT METHOD</Text>
-      <View style={styles.buttonContainer}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-          }}>
-          <Text style={styles.text2}>selct payment method</Text>
-          <MaterialIcons name="expand-more" size={30} color="black" />
+      <View style={styles.footerContainer}>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalText}>Total</Text>
+          <Text style={styles.totalAmount}>$240</Text>
         </View>
-      </View>
 
-      <TouchableOpacity style={styles.addView}>
-        <Text
-          style={{
-            color: 'white',
-            fontFamily: 'TenorSans-Regular',
-            fontSize: 17,
-            marginStart: 40,
-          }}>
-          PLACE ORDER
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.addView}>
+          <Image
+            source={require('../../../assets/images/BagWhite.png')}
+            style={styles.bagIcon}
+          />
+          <Text style={styles.addViewText}>PLACE ORDER</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -91,42 +81,96 @@ export default CheckoutComp;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContent: {
+    paddingBottom: 150,
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 18,
+    fontSize: 25,
     letterSpacing: 2,
     marginTop: 30,
     fontFamily: 'TenorSans-Regular',
+    textAlign: 'center',
+  },
+  headerImage: {
+    width: 200,
+    height: 15,
+    marginTop: 7,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
   text: {
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: 'TenorSans-Regular',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    marginEnd: 200,
     opacity: 0.6,
+    marginBottom: 10,
   },
   buttonContainer: {
-    width: 330,
-    height: 55,
-    borderRadius: 40,
-    backgroundColor: '#F6ACAC1A',
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#f5f5f5',
     marginTop: 20,
+    justifyContent: 'center',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 20,
   },
   text2: {
     fontSize: 15,
     fontFamily: 'TenorSans-Regular',
     opacity: 0.6,
   },
+  freeText: {
+    fontFamily: 'TenorSans-Regular',
+    opacity: 0.6,
+    marginLeft: 200,
+  },
+  footerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    padding: 0,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginBottom: 10,
+  },
+  totalText: {
+    fontSize: 18,
+    fontFamily: 'TenorSans-Regular',
+    opacity: 0.7,
+  },
+  totalAmount: {
+    fontSize: 18,
+    color: '#DD8560',
+    fontFamily: 'TenorSans-Regular',
+  },
   addView: {
-    height: 50,
-    width: '100%',
+    flexDirection: 'row',
+    height: 80,
     backgroundColor: 'black',
-    marginTop: 230,
-
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+  },
+  addViewText: {
+    color: 'white',
+    fontFamily: 'TenorSans-Regular',
+    fontSize: 17,
+    marginLeft: 15,
+  },
+  bagIcon: {
+    height: 25,
+    width: 25,
   },
 });
