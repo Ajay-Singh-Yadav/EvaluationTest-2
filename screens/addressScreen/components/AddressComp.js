@@ -30,6 +30,37 @@ const AddressComp = () => {
   };
 
   const handleSave = () => {
+    const {firstName, lastName, address, city, state, zipCode, phoneNumber} =
+      formData;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !address ||
+      !city ||
+      !state ||
+      !zipCode ||
+      !phoneNumber
+    ) {
+      ToastAndroid.show('Please fill in all fields.', ToastAndroid.SHORT);
+      return;
+    }
+
+    const zipCodeRegex = /^[0-9]{5,6}$/;
+    if (!zipCodeRegex.test(zipCode)) {
+      ToastAndroid.show('Enter a valid ZIP code.', ToastAndroid.SHORT);
+      return;
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      ToastAndroid.show(
+        'Enter a valid 10-digit phone number.',
+        ToastAndroid.SHORT,
+      );
+      return;
+    }
+
     const newAddress = {
       id: Date.now(),
       ...formData,
